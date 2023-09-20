@@ -43,7 +43,7 @@ library(patchwork)
 ```
 
 ```{r, echo = FALSE}
-base <- read_excel("E:/Anova/base_deportistas.xlsx")
+base <- read_excel("C:/Users/Usuario/Desktop/Facultad Flor/Anova/base_deportistas.xlsx")
 ```
 
 ```{r dep}
@@ -165,7 +165,7 @@ library(tidyverse)
 ```
 
 ```{r, echo = FALSE}
-base_grupos <- read_excel("E:/Anova/base_deportistas.xlsx", 
+base_grupos <- read_excel("C:/Users/Usuario/Desktop/Facultad Flor/Anova/base_deportistas.xlsx", 
     sheet = "grupos")
 
 ```
