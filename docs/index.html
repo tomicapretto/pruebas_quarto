@@ -456,9 +456,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>El test de hipótesis para responder al objetivo resulta: <span class="math inline">\(H_0) \tau_a = \tau_b =\tau_c =\tau_d\)</span> versus <span class="math inline">\(H_1) Al \ menos \ un \ \tau_i \neq del \ resto, i=\overline{1,a}\)</span>.</p>
 <p>En base a la evidencia muestral y con un nivel de significación del <span class="math inline">\(5\%\)</span>, se rechaza la hipótesis nula, es decir, existen diferencias signficativas en los tiempos que les lleva realizar el test de coordinación en al menos uno de los grupos de deportistas.</p>
-</section>
-<section id="comparaciones-múltiples" class="level1">
-<h1>Comparaciones múltiples</h1>
+<section id="comparaciones-múltiples" class="level2">
+<h2 class="anchored" data-anchor-id="comparaciones-múltiples">Comparaciones múltiples</h2>
 <p>El problema sobre la comparación de varios grupos que se resuelve a través del ANOVA es interesante y útil, pero no siempre suficiente. En caso de rechazar la hipótesis nula, se concluirá que no todos los tratamientos tienen los mismos promedios poblacionales pero, seguramente, el investigador querrá saber cuál o cuáles son los promedios diferentes o cuáles son iguales entre sí.</p>
 <p>Para conocer entre cuales grupos se presentan las diferencias se utilizará el procedimiento de <strong>Comparaciones múltiples</strong>, el cual tiene como objetivo dar respuesta a las siguientes hipótesis (una vez que se rechazó la igualdad de medias de tratamientos con la prueba F del ANOVA): <span class="math inline">\(H_0) \mu_i = \mu_{i'}\)</span> versus <span class="math inline">\(H_1) \mu_i \neq \mu_{i'}, \ i \neq i' \ \land i,i'=\overline{1,a}\)</span>.</p>
 <p>Se compararán los grupos de deportistas estudiados en la sección 2 de ANOVA para un criterio de clasificación.</p>
@@ -658,8 +657,8 @@ attr(,"class")
 </div>
 <p>Para cualquiera de los métodos presentados, se concluye que con un nivel de significación del 5%, los tiempos medios en realizar el test de coordinación difieren para los deportistas de distintos deportes (basquetball-volleyball), y no difieren entre diferentes clubes (CAL-CAP).</p>
 </section>
-<section id="comprobación-de-supuestos" class="level1">
-<h1>Comprobación de supuestos</h1>
+<section id="comprobación-de-supuestos" class="level2">
+<h2 class="anchored" data-anchor-id="comprobación-de-supuestos">Comprobación de supuestos</h2>
 <p>La validez de las inferencias extraídas a partir del modelo y su correspondiente ANOVA, las pruebas de hipótesis y los intervalos de confianza, se basan en el cumplimiento de los supuestos postulados. Si el modelo es de efectos fijos, se postula el supuesto de independencia, normalidad e igualdad de variancias para los errores aleatorios.</p>
 <p>Como los errores del modelo son desconocidos, la verificación de los mismos se realiza sobre una estimación de esos errores, los que habitualmente denominamos residuos. Se utilizarán los <strong>residuos ordinarios</strong> (<span class="math inline">\(\hat e_{ij} = y_{ij}-\bar y_{i.}\)</span>) y los <strong>residuos estandarizados</strong> (<span class="math inline">\(w_{ij} = \frac{\hat e_{ij}}{\sqrt{CME}}\)</span>).</p>
 <div class="cell" data-layout-align="center">
@@ -741,6 +740,201 @@ group  3  2.1288 0.1051
 <li>Técnicas no paramétricas: Friedman, Kruskal-Wallis.</li>
 <li>Modelos Lineales Generalizados.</li>
 </ul>
+</section>
+</section>
+<section id="anova-para-dos-criterios-de-clasificación-cruzados" class="level1">
+<h1>ANOVA para dos criterios de clasificación cruzados</h1>
+<p>Análisis en el que se presentan dos <strong>factores de clasificación (con dos o más niveles cada uno)</strong>. El término <em>cruzado</em> indica que cada nivel de un factor puede combinarse con cada nivel del otro factor. El objetivo es conocer si estos factores influyen en el comportamiento de una <strong>variable (respuesta) continua y gaussiana</strong> a través de un <strong>Análisis de la Variancia</strong> (ANOVA).</p>
+<p>Los datos brindados corresponden a una muestra de deportistas federados, de 18 a 22 años de la ciudad de Rosario. Se desea conocer si existen diferencias significativas en el resultado medio del “test de Coordinación en 4 tramos de 10 metros cada tramo” entre los deportistas teniendo en cuenta el deporte en el que compiten y el club en el que se entrenan.</p>
+<ul>
+<li>Factor 1: Deporte (Volleyball-Básquetball)</li>
+<li>Factor 2: Club (Club Atlético Libertad-Club Atlético Provincial)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerías</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(base_factores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+     id sexo      club                     deporte    coord saltar grupos       
+  &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                    &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;        
+1     4 Femenino  CLUB ATLETICO PROVINCIAL Volleyball  16.0     45 CAProvincial…
+2     6 Femenino  CLUB ATLETICO PROVINCIAL Volleyball  15.1     51 CAProvincial…
+3     8 Masculino CLUB ATLETICO PROVINCIAL Volleyball  14.7     53 CAProvincial…
+4    11 Masculino CLUB ATLETICO PROVINCIAL Volleyball  14.2     43 CAProvincial…
+5    12 Femenino  CLUB ATLETICO PROVINCIAL Volleyball  18.6     49 CAProvincial…
+6    13 Femenino  CLUB ATLETICO PROVINCIAL Volleyball  17.6     41 CAProvincial…</code></pre>
+</div>
+</div>
+<p>Se estudian medidas descriptivas y gráficos de boxplots y perfiles para los deportistas según deporte y club.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Medidas descriptivas</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>base_factores <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(deporte, club) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(coord),</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(coord)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+# Groups:   deporte [2]
+  deporte    club                         n media desvio
+  &lt;chr&gt;      &lt;chr&gt;                    &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 Básquetbol CLUB ATLETICO PROVINCIAL    14  14.6  0.493
+2 Básquetbol CLUB ATLÉTICO LIBERTAD      14  14.5  1.02 
+3 Volleyball CLUB ATLETICO PROVINCIAL    29  16.5  1.15 
+4 Volleyball CLUB ATLÉTICO LIBERTAD      12  16.3  1.02 </code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplots</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(base_factores, <span class="fu">aes</span>(<span class="at">x =</span> deporte, <span class="at">y =</span> coord)) <span class="sc">+</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>club) <span class="sc">+</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#4271AE"</span>, <span class="at">colour =</span> <span class="st">"#1F3552"</span>, </span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Resultado del test"</span>, <span class="at">x=</span><span class="st">"Deporte"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de perfiles (para evaluar interacción entre factores)</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>base_factores <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(deporte, club) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(coord)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>deporte,<span class="at">y=</span>media,</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">group=</span>club,</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>club)) <span class="sc">+</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Media"</span>, <span class="at">x=</span><span class="st">"Deporte"</span>,<span class="at">color=</span><span class="st">"Club"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Se puede observar que los tiempos en realizar el test de coordinación difieren dependiendo del deporte que practican los deportistas, los jugadores de basquetball en promedio realizan el test más rapidamente que los jugadores de volleyball. Con respecto al club, no parece haber diferencias entre los deportistas de clubes distintos.</p>
+<p>Se plantea el siguiente modelo de efectos fijos:<br>
+</p>
+<p><span class="math inline">\(y_{ijk} = \mu + \tau_i + \beta_j + (\tau \beta)_{ij} + e_{ijk}, \ i=\overline{1,2} \ \land \ j=\overline{1,2}\ \land \ k=\overline{1,n_i}\)</span>, donde:</p>
+<ul>
+<li><p><span class="math inline">\(y_{ijk}\)</span>: resultado en el test de coordinación del <span class="math inline">\(k-ésimo\)</span> deportista que entrena en <span class="math inline">\(j\)</span> el deporte <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\mu\)</span>: valor de referencia del resultado del test de coordinación.</p></li>
+<li><p><span class="math inline">\(\tau_i\)</span>: efecto deporte <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\tau_i\)</span>: efecto club <span class="math inline">\(j\)</span>.</p></li>
+<li><p><span class="math inline">\((\tau \beta)_{ij}\)</span>: efecto interacción entre el deporte <span class="math inline">\(i\)</span> y el club <span class="math inline">\(j\)</span>.</p></li>
+<li><p><span class="math inline">\(e_{ijk}\)</span>: error aleatorio del <span class="math inline">\(k-ésimo\)</span> deportista que entrena en <span class="math inline">\(j\)</span> el deporte <span class="math inline">\(i\)</span>.</p></li>
+</ul>
+<p>Además, <span class="math inline">\(e_{ijk} \sim \mathcal{N}(0,\sigma^2)\)</span> <em>e independientes.</em></p>
+<p>En este modelo, a través de la interacción, se postula que el efecto de deporte en el resultado del test de coordinación de los deportistas depende del club.</p>
+<p>A continuación, se muestra la tabla ANOVA:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla ANOVA</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(coord<span class="sc">~</span>deporte<span class="sc">*</span>club, base_factores)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+deporte       1  58.50   58.50  58.304 1.3e-10 ***
+club          1   0.28    0.28   0.274   0.602    
+deporte:club  1   0.01    0.01   0.011   0.916    
+Residuals    65  65.21    1.00                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo estimado</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(coord<span class="sc">~</span>deporte<span class="sc">*</span>club, base_factores)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = coord ~ deporte * club, data = base_factores)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.2445 -0.5650  0.0350  0.7055  2.3233 
+
+Coefficients:
+                                               Estimate Std. Error t value
+(Intercept)                                    14.49143    0.26770  54.133
+deporteVolleyball                               1.81524    0.39405   4.607
+clubCLUB ATLETICO PROVINCIAL                    0.10357    0.37859   0.274
+deporteVolleyball:clubCLUB ATLETICO PROVINCIAL  0.05424    0.51140   0.106
+                                               Pr(&gt;|t|)    
+(Intercept)                                     &lt; 2e-16 ***
+deporteVolleyball                              1.96e-05 ***
+clubCLUB ATLETICO PROVINCIAL                      0.785    
+deporteVolleyball:clubCLUB ATLETICO PROVINCIAL    0.916    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.002 on 65 degrees of freedom
+Multiple R-squared:  0.4741,    Adjusted R-squared:  0.4498 
+F-statistic: 19.53 on 3 and 65 DF,  p-value: 3.877e-09</code></pre>
+</div>
+</div>
+<p>El test de hipótesis para responder al efecto interacción se plantea como: <span class="math inline">\(H_0)\)</span> No hay interacción versus <span class="math inline">\(H_1)\)</span> Hay interacción. Que no haya interacción es que el efecto deporte es el mismo para cualquier club: <span class="math inline">\(\mu_{11} - \mu_{21} = \mu_{12} - \mu_{22}\)</span>, luego la hipótesis en términos de los parámetros resulta: <span class="math inline">\(H_0) \mu_{11} - \mu_{21} = \mu_{12} - \mu_{22}\)</span></p>
+<p>En base a la evidencia muestral y con un nivel de significación del <span class="math inline">\(5\%\)</span>, no se rechaza la hipótesis nula, es decir, no hay efecto interacción entre deporte y club. El efecto del deporte sobre el cambio del resultado del test de coordinación de los deportistas no depende del club en el que entrenan.</p>
+<p>Como la interacción del modelo no resultó significativa, se puede proceder a probar que sucede con los efectos principales, a partir de las siguientes hipótesis:</p>
+<ul>
+<li><p>Efecto Deporte: <span class="math inline">\(H_0) \ \tau_{1} = \tau_{2}\)</span> vs.&nbsp;<span class="math inline">\(H_1) \ \tau_{1} \neq \tau_{2}\)</span></p></li>
+<li><p>Efecto Club: <span class="math inline">\(H_0) \ \beta_{1} = \beta_{2}\)</span> vs.&nbsp;<span class="math inline">\(H_1) \ \beta_{1} \neq \beta_{2}\)</span></p></li>
+</ul>
+<p>En base a la evidencia muestral y con un nivel de significación del <span class="math inline">\(5\%\)</span>, se concluye que el deporte que practica el deportista influye significativamente sobre el resultado en el test de coordinación. En cambio, el club en el cual entrenan no influye significativamente sobre la respuesta.</p>
+<section id="comparaciones-múltiples-1" class="level2">
+<h2 class="anchored" data-anchor-id="comparaciones-múltiples-1">Comparaciones múltiples</h2>
+<p>En este caso, como el único efecto principal que resultó significativo fue ‘Deporte’ y este sólo tiene dos niveles no tendría sentido realizar comparaciones múltiples. A fines de mostrar como se continuaría el análisis, se presentan comparaciones múltiples pensando en que la interacción entre los factores hubiera sido significativa. Se comparan 6 medias, cruzando los niveles de ambos factores: <span class="math inline">\(H_0) \ \mu_{ij} = \mu_{i'j'}\)</span> versus <span class="math inline">\(H_1) \ \mu_{ij} \neq \mu_{i'j'}, \ \forall \ i &lt; i' \ , \ j&lt;j'\)</span></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(modelo, pairwise<span class="sc">~</span>deporte<span class="sc">*</span>club, <span class="at">adjust=</span><span class="st">"tukey"</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ deporte    club                     emmean    SE df lower.CL upper.CL
+ Básquetbol CLUB ATLÉTICO LIBERTAD     14.5 0.268 65     14.0     15.0
+ Volleyball CLUB ATLÉTICO LIBERTAD     16.3 0.289 65     15.7     16.9
+ Básquetbol CLUB ATLETICO PROVINCIAL   14.6 0.268 65     14.1     15.1
+ Volleyball CLUB ATLETICO PROVINCIAL   16.5 0.186 65     16.1     16.8
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                                                                 
+ Básquetbol CLUB ATLÉTICO LIBERTAD - Volleyball CLUB ATLÉTICO LIBERTAD    
+ Básquetbol CLUB ATLÉTICO LIBERTAD - Básquetbol CLUB ATLETICO PROVINCIAL  
+ Básquetbol CLUB ATLÉTICO LIBERTAD - Volleyball CLUB ATLETICO PROVINCIAL  
+ Volleyball CLUB ATLÉTICO LIBERTAD - Básquetbol CLUB ATLETICO PROVINCIAL  
+ Volleyball CLUB ATLÉTICO LIBERTAD - Volleyball CLUB ATLETICO PROVINCIAL  
+ Básquetbol CLUB ATLETICO PROVINCIAL - Volleyball CLUB ATLETICO PROVINCIAL
+ estimate    SE df lower.CL upper.CL
+   -1.815 0.394 65   -2.854   -0.776
+   -0.104 0.379 65   -1.102    0.895
+   -1.973 0.326 65   -2.833   -1.114
+    1.712 0.394 65    0.673    2.751
+   -0.158 0.344 65   -1.064    0.749
+   -1.869 0.326 65   -2.729   -1.010
+
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 4 estimates </code></pre>
+</div>
+</div>
+<p>Como era de esperarse, las comparaciones que resultan significatiavas (el intervalo de confianza de los pares comparados no cubre al cero) son las que comparan diferentes deportes.</p>
+<p>El análisis se finaliza con la comprobación de los supuestos de normalidad, homocedasticidad e independencia.</p>
 <div>
 
 
@@ -749,6 +943,7 @@ group  3  2.1288 0.1051
 
 
 </div></section>
+</section>
 
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
