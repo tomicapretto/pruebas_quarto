@@ -3,7 +3,7 @@ title: "Análisis de la Variancia (ANOVA)"
 author: "Bartolelli - Colombo - Cuesta"
 date: "2023"
 output: 
-    rmdformats::material:
+    theme: journal
 ---
 
 ```{r setup, include=FALSE}
