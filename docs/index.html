@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de la Variancia (ANOVA)</title>
+<title>Análisis de la Variancia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -39,6 +39,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,14 +72,14 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Análisis de la Variancia (ANOVA)</span>
+    <span class="navbar-title">Análisis de la Variancia</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./contenidos/index.html">
  <span class="menu-text">Contenidos</span></a>
@@ -92,33 +94,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
-   
-  <ul>
-  <li><a href="#profesores" id="toc-profesores" class="nav-link active" data-scroll-target="#profesores">Profesores</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 
 <div class="grid title-block">
 <div class="course-details-title-block g-col-12 g-col-sm-8 order-2 order-sm-1 text-sm-start">
-<section id="estadística-bayesiana" class="level1 course-title text-center text-sm-start">
-<h1 class="course-title">Estadística Bayesiana</h1>
+<section id="análisis-de-la-variancia" class="level1 course-title text-center text-sm-start">
+<h1 class="course-title">Análisis de la Variancia</h1>
 <div class="course-subtitle">
 <!--Este es el subtitulo...-->
 </div>
 </section>
 <div class="course-meta">
-<p> &nbsp; Licenciatura en Estadística<br>
-&nbsp; Facultad de Ciencias Económicas y Estadística (UNR)<br>
-&nbsp; 1° Cuatrimestre 2023<br>
-&nbsp; Lun – 11:00 a 13:00 &nbsp; | &nbsp; Mié – 7:00 a 9:00 &nbsp; | &nbsp; Vie – 7:00 a 9:00</p>
+<p><i class="fa-solid fa-graduation-cap" aria-label="graduation-cap"></i> &nbsp; Licenciatura en Estadística<br>
+<i class="fa-solid fa-university" aria-label="university"></i> &nbsp; Facultad de Ciencias Económicas y Estadística (UNR)<br>
+<i class="fa-solid fa-calendar-alt" aria-label="calendar-alt"></i> &nbsp; 1° Cuatrimestre 2023<br>
+<i class="fa-solid fa-clock" aria-label="clock"></i> &nbsp; Lun – 11:00 a 13:00 &nbsp; | &nbsp; Mié – 7:00 a 9:00 &nbsp; | &nbsp; Vie – 7:00 a 9:00</p>
 </div>
 </div>
 <div class="g-col-12 g-col-sm-4 order-1 order-sm-2">
@@ -141,15 +135,15 @@ ul.task-list li input[type="checkbox"] {
 <section id="nacho-evangelista" class="level3 g-col-12 g-col-sm-6">
 <h3 class="anchored" data-anchor-id="nacho-evangelista">Nacho Evangelista</h3>
 <ul>
-<li> &nbsp; <a href="mailto:evangelistaignacio@gmail.com">evangelistaignacio@gmail.com</a></li>
-<li> &nbsp; <a href="https://calendar.app.google/VgFTvneiTiXBJ7Xx6">Consultas: Martes 14:00|14:45</a></li>
+<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp; <a href="mailto:evangelistaignacio@gmail.com">evangelistaignacio@gmail.com</a></li>
+<li><i class="fa-solid fa-calendar" aria-label="calendar"></i> &nbsp; <a href="https://calendar.app.google/VgFTvneiTiXBJ7Xx6">Consultas: Martes 14:00|14:45</a></li>
 </ul>
 </section>
 <section id="tomás-capretto" class="level3 g-col-12 g-col-sm-6">
 <h3 class="anchored" data-anchor-id="tomás-capretto">Tomás Capretto</h3>
 <ul>
-<li> &nbsp; <a href="mailto:tomicapretto@gmail.com">tomicapretto@gmail.com</a></li>
-<li> &nbsp; Consultas: Jueves 9:00</li>
+<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp; <a href="mailto:tomicapretto@gmail.com">tomicapretto@gmail.com</a></li>
+<li><i class="fa-solid fa-calendar" aria-label="calendar"></i> &nbsp; Consultas: Jueves 9:00</li>
 </ul>
 </section>
 </div>

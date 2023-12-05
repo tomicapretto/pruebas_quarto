@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "Análisis de la Variancia (ANOVA)"
+  title: "Análisis de la Variancia"
   navbar:
-    left:
+    right:
       - text: Contenidos
         href: contenidos/index.qmd
         
@@ -23,6 +23,8 @@ website:
 
 format:
   html:
-    theme: journal
-    lang: es
+    theme: 
+      - journal
+      - styles.scss
     toc: true
+    lang: es
