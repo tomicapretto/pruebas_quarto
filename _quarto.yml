@@ -6,10 +6,23 @@ website:
   title: "Análisis de la Variancia (ANOVA)"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
+      - text: Contenidos
+        href: contenidos/index.qmd
+        
+  sidebar:
+    - title: Contenidos
+      style: docked
+      search: false
+      background: dark
+      header: Contenidos
+      contents:
+        - text: Titulo 1
+          file: contenidos/un_criterio.qmd
+        - text: Titulo 2
+          file: contenidos/dos_criterios_aditivos.qmd
 
 format:
   html:
     theme: journal
     lang: es
+    toc: true

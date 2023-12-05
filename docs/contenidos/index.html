@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de la Variancia (ANOVA)</title>
+<title>Análisis de la Variancia (ANOVA) - Contenidos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -62,14 +62,14 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Análisis de la Variancia (ANOVA)</span>
     </a>
   </div>
@@ -79,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./contenidos/index.html">
+    <a class="nav-link active" href="../contenidos/index.html" aria-current="page">
  <span class="menu-text">Contenidos</span></a>
   </li>  
 </ul>
@@ -87,75 +87,67 @@ ul.task-list li input[type="checkbox"] {
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Contenidos</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p>Contenidos</p>
+</div></div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contenidos/un_criterio.html" class="sidebar-item-text sidebar-link">Titulo 1</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contenidos/dos_criterios_aditivos.html" class="sidebar-item-text sidebar-link">Titulo 2</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
-   
-  <ul>
-  <li><a href="#profesores" id="toc-profesores" class="nav-link active" data-scroll-target="#profesores">Profesores</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Contenidos</h1>
+</div>
 
 
 
-<div class="grid title-block">
-<div class="course-details-title-block g-col-12 g-col-sm-8 order-2 order-sm-1 text-sm-start">
-<section id="estadística-bayesiana" class="level1 course-title text-center text-sm-start">
-<h1 class="course-title">Estadística Bayesiana</h1>
-<div class="course-subtitle">
-<!--Este es el subtitulo...-->
-</div>
-</section>
-<div class="course-meta">
-<p> &nbsp; Licenciatura en Estadística<br>
-&nbsp; Facultad de Ciencias Económicas y Estadística (UNR)<br>
-&nbsp; 1° Cuatrimestre 2023<br>
-&nbsp; Lun – 11:00 a 13:00 &nbsp; | &nbsp; Mié – 7:00 a 9:00 &nbsp; | &nbsp; Vie – 7:00 a 9:00</p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-4 order-1 order-sm-2">
-<div class="grid five-columns">
-<div class="g-col-1 g-col-sm-0">
+<div class="quarto-title-meta">
 
-</div>
-<div class="g-col-3 g-col-sm-5">
-<p><img src="utils/imgs/logo.png" class="img-fluid"><img></p>
-</div>
-<div class="g-col-1 g-col-sm-0">
+    
+  
+    
+  </div>
+  
 
-</div>
-</div>
-</div>
-</div>
-<section id="profesores" class="level2">
-<h2 class="anchored" data-anchor-id="profesores">Profesores</h2>
-<div class="grid course-details">
-<section id="nacho-evangelista" class="level3 g-col-12 g-col-sm-6">
-<h3 class="anchored" data-anchor-id="nacho-evangelista">Nacho Evangelista</h3>
+</header>
+
+<p>Acá podes escribir algo si querés.</p>
 <ul>
-<li> &nbsp; <a href="mailto:evangelistaignacio@gmail.com">evangelistaignacio@gmail.com</a></li>
-<li> &nbsp; <a href="https://calendar.app.google/VgFTvneiTiXBJ7Xx6">Consultas: Martes 14:00|14:45</a></li>
+<li><a href="../contenidos/un_criterio.html">ANOVA para un criterio de clasificación</a></li>
+<li><a href="../contenidos/dos_criterios_aditivos.html">ANOVA para dos criterios de clasificación cruzados sin interacción</a></li>
 </ul>
-</section>
-<section id="tomás-capretto" class="level3 g-col-12 g-col-sm-6">
-<h3 class="anchored" data-anchor-id="tomás-capretto">Tomás Capretto</h3>
-<ul>
-<li> &nbsp; <a href="mailto:tomicapretto@gmail.com">tomicapretto@gmail.com</a></li>
-<li> &nbsp; Consultas: Jueves 9:00</li>
-</ul>
-</section>
-</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

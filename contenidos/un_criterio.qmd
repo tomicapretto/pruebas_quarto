@@ -1,0 +1,207 @@
+---
+title: ANOVA para un criterio de clasificación
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      comment = NA, fig.align = "center", out.width = "75%")
+```
+
+<div style="text-align: justify">
+
+
+Análisis comparativo en el que se presenta un **factor de clasificación con dos o más niveles**. Cada nivel se refiere a una población diferente. El objetivo es comparar dichas poblaciones en función de una **variable (respuesta) continua y gaussiana** a través de un **Análisis de la Variancia** (ANOVA).
+
+Los datos brindados corresponden a una muestra de deportistas federados, de 18 a 22 años, que entrenan y compiten en deportes y clubes diferentes de la ciudad de Rosario. Se desea conocer si existen diferencias significativas en el resultado medio del "test de Coordinación en 4 tramos de 10 metros cada tramo" entre los grupos de deportistas. Los cuatro grupos comparados están conformados de la siguiente manera:
+
+-   Grupo 1: deportistas jugadores de basquetball del Club Atlético Libertad
+-   Grupo 2: deportistas jugadores de volleyball del Club Atlético Libertad
+-   Grupo 3: deportistas jugadores de basquetball del Club Atlético Provincial
+-   Grupo 4: deportistas jugadores de volleyball del Club Atlético Provincial
+
+```{r}
+# Librerías
+library(readxl)
+library(cowplot)
+library(tidyverse)
+```
+
+```{r, echo = FALSE}
+# base_grupos <- read_excel("C:/Users/Usuario/Desktop/Facultad Flor/Anova/base_deportistas.xlsx", sheet = "grupos")
+base_grupos <- read_excel("../base_deportistas.xlsx", sheet = "grupos")
+```
+
+```{r}
+head(base_grupos)
+```
+
+```{r}
+table(base_grupos$grupos)
+```
+
+Se evalua el cumplimiento de normalidad en los grupos en estudio. Se puede comprobar a través de la prueba de Shapiro-Wilks, en el cual se prueba $H_0) Y \sim \mathcal{N}(\mu,\sigma^2)$ versus $H_1) Y \nsim \mathcal{N}(\mu,\sigma^2)$. La variable respuesta *Y* representa el tiempo (en segundos) que tarda un deportista en realizar el test de coordinación.
+
+```{r}
+shapiro.test(base_grupos$coord[base_grupos$grupos=='CALibertad-basquetball']) 
+shapiro.test(base_grupos$coord[base_grupos$grupos=='CALibertad-volleyball'])
+shapiro.test(base_grupos$coord[base_grupos$grupos=='CAProvincial-basquetball'])
+shapiro.test(base_grupos$coord[base_grupos$grupos=='CAProvincial-volleyball'])
+```
+
+En este caso, se concluye que en base a la evidencia muestral y con un nivel de significación del $5\%$ las poblaciones se distribuyen de manera normal.
+
+Luego, se estudian medidas descriptivas y gráfico de boxplots para los cuatro grupos de deportistas.
+
+```{r}
+# Estadísticas descriptivas
+base_grupos %>% 
+  group_by(grupos) %>% 
+  summarise(
+    n = n(),
+    media = mean(coord),
+    desvio = sd(coord)
+  )
+
+# Boxplots
+ggplot(base_grupos, aes(x = grupos, y = coord)) +
+  stat_boxplot(geom = "errorbar", 
+               width = 0.2) +
+  geom_boxplot(fill = "#4271AE", colour = "#1F3552", 
+               alpha = 0.9) +
+  ggtitle("Boxplots de los tiempos en realizar el test de coordinación según grupo de deportistas") +
+  labs(y="Tiempo (en segundos)", x="Grupos")
+
+```
+
+Se puede observar que los tiempos en realizar el test de coordinación difieren dependiendo del grupo de deportistas. A continuación, se evaluará si esta diferencia es significativa.
+
+Se plantea el siguiente modelo de efectos fijos: $y_{ij} = \mu + \tau_i + e_{ij}, \ i=\overline{1,a} \ \land \ j=\overline{1,n_i}$, donde:
+
+-   $y_{ij} =$ resultado del test de coordinación del deportista $j$ del grupo $i$.
+
+-   $\mu =$ valor de referencia del test de coordinación.
+
+-   $\tau_i =$ efecto grupo $i$.
+
+-   $e_{ij} =$ error aleatorio del deportista $j$ del grupo $i$.
+
+Además, $e_{ij} \sim \mathcal{N}(0,\sigma^2)$ *e independientes.*
+
+A continuación, se muestra la tabla ANOVA:
+
+```{r}
+# Tabla ANOVA
+anova <- aov(coord~grupos, base_grupos)
+summary(anova)
+```
+
+El test de hipótesis para responder al objetivo resulta: $H_0) \tau_a = \tau_b =\tau_c =\tau_d$ versus $H_1) Al \ menos \ un \ \tau_i \neq del \ resto, i=\overline{1,a}$.
+
+En base a la evidencia muestral y con un nivel de significación del $5\%$, se rechaza la hipótesis nula, es decir, existen diferencias signficativas en los tiempos que les lleva realizar el test de coordinación en al menos uno de los grupos de deportistas.
+
+## Comparaciones múltiples
+
+El problema sobre la comparación de varios grupos que se resuelve a través del ANOVA es interesante y útil, pero no siempre suficiente. En caso de rechazar la hipótesis nula, se concluirá que no todos los tratamientos tienen los mismos promedios poblacionales pero, seguramente, el investigador querrá saber cuál o cuáles son los promedios diferentes o cuáles son iguales entre sí.
+
+Para conocer entre cuales grupos se presentan las diferencias se utilizará el procedimiento de **Comparaciones múltiples**, el cual tiene como objetivo dar respuesta a las siguientes hipótesis (una vez que se rechazó la igualdad de medias de tratamientos con la prueba F del ANOVA): $H_0) \mu_i = \mu_{i'}$ versus $H_1) \mu_i \neq \mu_{i'}, \ i \neq i' \ \land i,i'=\overline{1,a}$.
+
+Se compararán los grupos de deportistas estudiados en la sección 2 de ANOVA para un criterio de clasificación.
+
+```{r}
+# Librería
+library(agricolae)
+```
+
+Se ajusta el modelo para los datos tal como se planteó en la sección 2 ($y_{ij} = \mu + \tau_i + e_{ij}, \ i=\overline{1,a} \ \land \ j=\overline{1,n_i}$).
+
+```{r}
+modelo <- lm(coord~grupos, base_grupos)
+summary(modelo)
+```
+
+Se presentan algunos métodos para dar respuesta a nuestra prueba de hipótesis.
+
+```{r}
+# Método de la diferencia mínima significativa (LSD: Least Significant Difference)
+LSD <- LSD.test(modelo, "grupos", p.adj = "none")
+LSD
+```
+
+```{r}
+# Método (prueba) de Duncan
+duncan <- duncan.test(modelo, "grupos")
+duncan 
+```
+
+```{r}
+# Método de Student-Newman-Keuls
+snk <- SNK.test(modelo, "grupos")
+snk
+```
+
+```{r}
+# Método Tukey o de la “Diferencia Honestamente Significativa (HSD)”
+hsd <- HSD.test(modelo, "grupos")
+hsd
+```
+
+Para cualquiera de los métodos presentados, se concluye que con un nivel de significación del 5%, los tiempos medios en realizar el test de coordinación difieren para los deportistas de distintos deportes (basquetball-volleyball), y no difieren entre diferentes clubes (CAL-CAP).
+
+## Comprobación de supuestos
+
+La validez de las inferencias extraídas a partir del modelo y su correspondiente ANOVA, las pruebas de hipótesis y los intervalos de confianza, se basan en el cumplimiento de los supuestos postulados. Si el modelo es de efectos fijos, se postula el supuesto de independencia, normalidad e igualdad de variancias para los errores aleatorios.
+
+Como los errores del modelo son desconocidos, la verificación de los mismos se realiza sobre una estimación de esos errores, los que habitualmente denominamos residuos. Se utilizarán los **residuos ordinarios** ($\hat e_{ij} = y_{ij}-\bar y_{i.}$) y los **residuos estandarizados** ($w_{ij} = \frac{\hat e_{ij}}{\sqrt{CME}}$).
+
+```{r}
+# Residuos ordinarios y estandarizados
+base_grupos$res <- residuals(modelo)
+base_grupos$res_est <- rstandard(modelo)
+```
+
+-   **Normalidad**
+
+La normalidad de los residuos se puede probar a través de técnicas gráficas (qq-plot, histogramas) y también a partir de pruebas de hipótesis (Shapiro-Wilks, Lilliefors).
+
+```{r}
+# qq-plot de cuantiles empíricos versus cuantiles teóricos
+ggplot(base_grupos,aes(sample=res)) +
+  stat_qq() + 
+  stat_qq_line() +
+  theme_bw()
+
+# Test de Shapiro-Wilks (H0) Los errores se distribuyen normales)
+shapiro.test(base_grupos$res)
+
+# Test de Lilliefors (H0) Los errores se distribuyen normales)
+library(nortest) 
+lillie.test(base_grupos$res)
+
+```
+
+-   **Homocedasticidad (variancia constante)**
+
+La homocedasticidad de los residuos se puede probar a través de técnicas gráficas (residuos versus valores predichos) y también a partir de pruebas de hipótesis (Levene, Bartlett).
+
+```{r}
+# Gráfico de w_ij vs. predichos
+ggplot(base_grupos, aes(x=grupos, y=res_est)) +
+  geom_point() +
+  theme_bw()
+
+# Test de Levene (H0) Todas las vcias son iguales vs. H1) Al menos una distina del resto)
+library(car)
+leveneTest(base_grupos$res_est, group = base_grupos$grupos)
+```
+
+-   **Independencia**
+
+La independencia de los errores se estudia a partir de la lógica del problema. En la práctica, por lo general, no se puede verificar debido a que no existe un orden temporal en las observaciones, en tal caso suele ser útil graficar los residuos en función del orden (o momento) en que fue recolectado el dato.
+
+Como este supuesto es difícilmente remediable, es necesario poner mucho esfuerzo en el momento de obtener los datos.
+
+Para nuestro ejemplo, se cumplen los supuestos de normalidad y homocedasticidad. En el caso de que alguno de ellos no se cumpla, se debería recurrir a alguno de los siguientes métodos:
+
+- Transformaciones: Logarítmica, Raíz Cuadrada, etcétera.
+- Técnicas no paramétricas: Friedman, Kruskal-Wallis.
+- Modelos Lineales Generalizados.
