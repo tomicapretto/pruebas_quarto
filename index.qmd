@@ -1,7 +1,6 @@
 ---
-title: "Análisis de la Variancia (ANOVA)"
 author: "Bartolelli - Colombo - Cuesta"
-date: "2023"
+date: "2023-12-05"
 output: 
     theme: journal
 ---
